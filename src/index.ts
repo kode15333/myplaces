@@ -4,6 +4,7 @@ import {Loader, LoaderOptions} from "google-maps";
 const options: LoaderOptions = {};
 const loader = new Loader(`${process.env.GOOGLE_MAP_API}`);
 let myPlaces : Array<object> = []
+let googleMap : any
 
 loader.load().then(function (google) {
     const map = new google.maps.Map(document.getElementById('map'), {
@@ -22,15 +23,15 @@ function addPlace (event : google.maps.MapMouseEvent) {
     localStorage.setItem('myPlaces', JSON.stringify(myPlaces))
 }
 
-// function renderMarkers () {
-//     googleMap.markerList.forEach(m => m.setMap(null)) // 모든 마커 제거
-//     googleMap.markerList = []
-//     // myPlaces 배열의 요소를 기반으로 마커를 추가한다
-//     myPlaces.forEach(place => {
-//         const marker = new google.maps.Marker({
-//             position: place.position,
-//             map: googleMap
-//         })
-//         googleMap.markerList.push(marker)
-//     })
-// }
+function renderMarkers () {
+    googleMap.markerList.forEach(m => m.setMap(null)) // 모든 마커 제거
+    googleMap.markerList = []
+    // myPlaces 배열의 요소를 기반으로 마커를 추가한다
+    myPlaces.forEach(place => {
+        const marker = new google.maps.Marker({
+            position: place.position,
+            map: googleMap
+        })
+        googleMap.markerList.push(marker)
+    })
+}
