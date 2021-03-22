@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import './scss/index.scss'
 import {Loader, LoaderOptions} from "google-maps";
 const options: LoaderOptions = {};
 const loader = new Loader(`${process.env.GOOGLE_MAP_API}`);

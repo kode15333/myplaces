@@ -1,0 +1,19 @@
+body {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100vh;
+
+  & .sidebar {
+    border: 1px solid;
+  }
+
+  .main-content-area {
+    width: 100%;
+    height: 100%;
+
+    #map {
+      height: 100%;
+    }
+  }
+}
