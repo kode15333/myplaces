@@ -1,13 +1,14 @@
 import {addPlace, getPlaces} from "./dataService";
-import {clearMap} from "./type";
-    interface googleMap extends google.maps.Map{
-        markerList? : any []
-    }
+import {clearMap, googleMap} from "./type";
+import {Loader} from "google-maps";
+const loader = new Loader(`${process.env.GOOGLE_MAP_API}`);
+
 let googleMap: googleMap;
 
-function init() {
+async function init() {
+    const google = await loader.load();
     googleMap = new google.maps.Map(document.getElementById('map'), {
-        center : { lat : 0, lng: 0},
+        center: {lat: 0, lng: 0},
         zoom: 3
     })
 
@@ -20,12 +21,12 @@ function addMarker(event: { latLng: any; }) {
     renderMarkers();
 }
 
-function renderMarkers(){
+function renderMarkers() {
     googleMap.markerList.forEach((m: clearMap) => m.setMap(null));
     googleMap.markerList = [];
 
     getPlaces().forEach(place => {
-        const marker  = new google.maps.Marker({
+        const marker = new google.maps.Marker({
             position: place.position,
             map: googleMap
         });

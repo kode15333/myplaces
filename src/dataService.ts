@@ -1,7 +1,9 @@
-let myPlaces: { position: any; name: string; }[] = [];
+import {position} from "./type";
+
+let myPlaces: position[] = [];
 const geocoder = new google.maps.Geocoder();
 
-export function addPlace(latLng: any) {
+export function addPlace(latLng: google.maps.LatLng) {
     geocoder.geocode({location: latLng}, function (results){
         try {
             const cityName = results
