@@ -1,23 +1,25 @@
 import {position} from "./type";
-import {googleSetting } from "./google";
+import {googleSetting} from "./google";
+
 let myPlaces: position[] = [];
+const changeListeners: any[] = [];
 
-let changeListeners: any[] = [];
-
-export function subscribe(callbackFunction: any) {
+export const subscribe:(callbackFunction: Function) => void  = (callbackFunction) => {
     changeListeners.push(callbackFunction);
 }
 
 
-function publish(data: position[] = []) {
-    changeListeners.forEach((changeListener) => { changeListener(data); });
+const publish :(data?: position[]  ) => void = (data = []) => {
+    changeListeners.forEach((changeListener) => {
+        changeListener(data);
+    });
 }
 
-export async function addPlace(latLng: google.maps.LatLng) {
+export const addPlace: (latLng: google.maps.LatLng) => Promise<void> = async (latLng) => {
     const google = await googleSetting();
     const geocoder = new google.maps.Geocoder();
 
-    geocoder.geocode({location: latLng}, function (results){
+    geocoder.geocode({location: latLng}, function (results) {
         try {
             const cityName = results
                 .find(result => result.types.includes('locality'))
@@ -34,7 +36,7 @@ export async function addPlace(latLng: google.maps.LatLng) {
     })
 }
 
-export function getPlaces() : position[]{
+export function getPlaces(): position[] {
     return myPlaces;
 }
 

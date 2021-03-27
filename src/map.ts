@@ -1,14 +1,14 @@
 import {addPlace, getPlaces, subscribe} from "./dataService";
-import {clearMap, googleMap} from "./type";
+import {clearMap, googleMap } from "./type";
 import {googleSetting } from "./google";
 
 let googleMap: googleMap;
 
-export async function showMap()  {
+export const showMap : () => void = async () => {
     const google = await googleSetting();
     googleMap = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 3
+        center: {lat: 37.49844438289986, lng: 127.35708799732791},
+        zoom: 10
     })
 
     googleMap.markerList = [];
@@ -20,7 +20,7 @@ export async function showMap()  {
 
 }
 
-function addMarker(event : google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
+const addMarker : (event : google.maps.MapMouseEvent | google.maps.IconMouseEvent) => void = (event) => {
     addPlace(event.latLng);
     renderMarkers();
 }

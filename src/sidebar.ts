@@ -1,7 +1,7 @@
 import {getPlaces, subscribe} from "./dataService";
 import {position} from "./type";
 
-function renderCities(placesArray: position[]){
+const renderCities = (placesArray: position[]): void => {
     const cityListElement = document.getElementById('citiesList');
 
     cityListElement.innerHTML = '';
