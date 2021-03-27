@@ -1,27 +1,31 @@
-import {addPlace, getPlaces} from "./dataService";
+import {addPlace, getPlaces, subscribe} from "./dataService";
 import {clearMap, googleMap} from "./type";
-import {Loader} from "google-maps";
-const loader = new Loader(`${process.env.GOOGLE_MAP_API}`);
+import {googleSetting } from "./google";
 
 let googleMap: googleMap;
 
-async function init() {
-    const google = await loader.load();
+export async function showMap()  {
+    const google = await googleSetting();
     googleMap = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 0, lng: 0},
+        center: {lat: -34.397, lng: 150.644},
         zoom: 3
     })
 
     googleMap.markerList = [];
     googleMap.addListener('click', addMarker);
+
+
+    renderMarkers();
+    subscribe(renderMarkers);
+
 }
 
-function addMarker(event: { latLng: any; }) {
+function addMarker(event : google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
     addPlace(event.latLng);
     renderMarkers();
 }
 
-function renderMarkers() {
+function renderMarkers() : void{
     googleMap.markerList.forEach((m: clearMap) => m.setMap(null));
     googleMap.markerList = [];
 
@@ -34,5 +38,3 @@ function renderMarkers() {
         googleMap.markerList.push(marker);
     })
 }
-
-init();

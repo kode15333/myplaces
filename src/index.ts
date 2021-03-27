@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 import './scss/index.scss'
-import {init} from "./map";
+import {showMap} from "./map";
+import './sidebar.ts'
 
 
-init();
+showMap();
+

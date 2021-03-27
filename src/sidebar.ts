@@ -1,15 +1,18 @@
-import { getPlaces} from "./dataService";
+import {getPlaces, subscribe} from "./dataService";
+import {position} from "./type";
 
-function renderCities(){
+function renderCities(placesArray: position[]){
     const cityListElement = document.getElementById('citiesList');
 
     cityListElement.innerHTML = '';
 
-    getPlaces().forEach(place => {
+    placesArray.forEach(place => {
         const cityElement = document.createElement('div');
         cityElement.innerHTML = place.name;
         cityListElement.appendChild(cityElement);
     })
 }
 
-renderCities();
+
+renderCities(getPlaces());
+subscribe(renderCities);
